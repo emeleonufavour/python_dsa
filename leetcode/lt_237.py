@@ -12,5 +12,5 @@ class Solution:
         """
         if node is None or node.next is None:
             return
-        node.val = node.next
+        node.val = node.next.val
         node.next = node.next.next
