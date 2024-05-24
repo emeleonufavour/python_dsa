@@ -1,0 +1,37 @@
+class Solution:
+    def isArraySpecial(self, nums: list[int], queries: list[list[int]]) -> list[bool]:
+        
+        result = []
+        if len(nums) == 1:
+            for fr,to in queries:
+                result.append(True)
+        else:
+            for fr,to in queries:
+                new_nums = nums[fr:to + 1]
+                if len(new_nums) == 1 or len(new_nums) == 0:
+                    result.append(True)
+                else:
+                    boolean = True
+                    for index,value in enumerate(new_nums):
+                        if index == 0:
+                            continue
+                        if (value % 2 == 0) and (new_nums[index-1] % 2== 0):
+                            boolean = False
+                            break
+                        if (value % 2 != 0) and (new_nums[index-1] % 2!= 0):
+                            boolean = False
+                            break
+                    result.append(boolean)
+        return result
+                
+                
+            
+        
+                
+if __name__ == "__main__":
+    sol = Solution()
+    mylist = [1]
+    queries = [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]
+    answer = sol.isArraySpecial(mylist ,queries)
+    
+    print(answer)
