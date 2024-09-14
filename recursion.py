@@ -1,142 +1,67 @@
+def merge_sort(arr: list[int]) -> list[int]:
+    if len(arr) == 1:
+        return arr
+    
+    middle_point = len(arr) // 2
+    first_half = arr[: middle_point]
+    second_half = arr[middle_point:]
+    
+    res = merge(merge_sort(first_half), merge_sort(second_half))
+    
+    return res
 
-
-def countdown(n):
-    """Countdown from n recursively"""
-    if n == 0:
-        return
-
-    print(n)
-    countdown(n - 1)
-
-
-def count_x(array):
-    """This function finds all the x that occurs in an array"""
-    if len(array) == 1:
-        if array[0] == "x":
-            return 1
+def merge(arr1: list[int], arr2: list[int]):
+    sorted_list = []
+    
+    len_1 = len(arr1)
+    len_2 = len(arr2)
+    
+    long = 0
+    short = 0
+    
+    while long < max(len_1, len_2) and short < min(len_1, len_2):
+        if len_1 > len_2:
+            if arr1[long] < arr2[short]:
+                sorted_list.append(arr1[long])
+                long = long + 1
+                print(f"current long {long}")
+            else:
+                sorted_list.append(arr2[short])
+                short = short + 1
+                print(f"current short {short}")
         else:
-            return 0
-
-    if array[0] == "x":
-        return 1 + count_x(array[1:])
-    else:
-        return count_x(array[1:])
-
-
-def factorial(n):
-    """Calculate a factorial recursively"""
-    if n == 1:
-        return 1
-    return n * factorial(n-1)
-
-
-def print_every_other(low, high):
-    """Print numbers from low to high in 2 steps"""
-    if low > high:
-        return
-    if low <= high:
-        print(low)
-        print_every_other(low=low + 2, high=high)
-
-
-dummy_array = [1, 2, 3,
-               [4, 5, 6],
-               7,
-               [8,
-                [9, 10, 11,
-                 [12, 13, 14]
-                 ]],
-               [15, 16, 17, 18, 19,
-                [20, 21, 22,
-                 [23, 24, 25,
-                  [26, 27, 29]
-                  ], 30, 31], 32
-                ], 33]
-
-xs = list("xbxcxd")
-
-
-def print_elements_array(your_array):
-    """Print all numbers in array"""
-    for i in your_array:
-        if isinstance(i, list):
-            print_elements_array(i)
-        else:
-            print(i)
-
-
-# def permute(str, remaining):
-#     """Generate a permutation for a str recursively"""
-#     if remaining == "":
-#         print(str)
-#     for index, c in enumerate(remaining):
-#         print(f"""The string is {str} and We are currently looking at {c} in {
-#               remaining}. The index is {index}""")
-#         new_str = str + c
-#         print(f"The new string is {new_str}")
-#         new_remaining = remaining[0:index] + remaining[index+1:]
-#         print(f"The new remainder is {new_remaining}")
-#         permute(new_str, new_remaining)
-
-def permute(str, remaining):
-    """Generate a permutation for a str recursively"""
-    permutations = []
-
-    if remaining == "":
-        permutations.append(str)
-    for index, c in enumerate(remaining):
-        new_str = str + c
-        new_remaining = remaining[0:index] + remaining[index+1:]
-        permutations.extend(permute(new_str, new_remaining))
-
-    return permutations
-
-
-# def permute(items: list[int], variation: list[int], result:  list[list[int]]):
-#     """Generate a permutation for a str recursively"""
-#     if len(items) == 0:
-#         result.append(variation.copy())
-
-#     for index, item in enumerate(items):
-#         new_variation = variation.copy()
-#         new_variation.append(item)
-
-#         remainder = items[0:index] + items[index+1:]
-#         permute(items=remainder, variation=new_variation,  result=result)
-
-#     return result
-
-
-# def permute(items: list[int], variation: list[int], result: list[list[int]]):
-#     """Generate permutations recursively"""
-#     if len(items) == 0:
-#         # Use a copy of the variation to avoid modifying the original list
-#         result.append(variation.copy())
-#         print(f"We are adding this variation {variation} to the result")
-#         print(f"""The result so far is {
-#               result} and the variation should be empty ==> {variation}""")
-
-#     for index, item in enumerate(items):
-#         print(f"The variation so far is {variation} and We are currently looking at {item} in "
-#               f"{items}. The index is {index}")
-
-#         # Create a new copy of the variation for each recursive call
-#         new_variation = variation.copy()
-#         new_variation.append(item)
-
-#         print(f"The new variation is {new_variation}")
-
-#         remainder = items[:index] + items[index+1:]
-#         print(f"The new remainder is {remainder}")
-
-#         # Make a recursive call with the new_variation
-#         permute(items=remainder, variation=new_variation, result=result)
-
-
-# counts = count_x(xs)
-# print(f"Counts ==> {counts}")
-# result = permute(items=[1, 2, 3], variation=[], result=[])
-# print(result)
-
-# result = permute("", "abc")
-# print(result)
+            if arr2[long] < arr1[short] :
+                sorted_list.append(arr2[long])
+                long = long + 1
+                print(f"current long {long}")
+            else:
+                sorted_list.append(arr1[short])
+                short = short + 1
+                print(f"current short {short}")
+    if long != max(len_1, len_2):
+        while long != max(len_1, len_2):
+            if len_1 > len_2:
+                sorted_list.append(arr1[long])
+                long = long + 1
+            else:
+                sorted_list.append(arr2[long])
+                long = long + 1
+    elif short != min(len_1, len_2):
+        while short != min(len_1, len_2):
+            if len_2 < len_1:
+                sorted_list.append(arr2[short])
+                short = short + 1
+            else:
+                sorted_list.append(arr1[short])
+                short = short + 1
+    
+    return sorted_list
+    
+    
+if __name__ == "__main__":
+    b = [4,6]
+    a = [1,3,5]
+    c = [1,5,4,2,6]
+    
+    res = merge_sort(c)
+    print(f"{res}")
